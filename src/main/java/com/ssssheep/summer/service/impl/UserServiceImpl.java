@@ -7,6 +7,7 @@ import com.ssssheep.summer.pojo.dto.PageData;
 import com.ssssheep.summer.pojo.entity.MovieTicket;
 import com.ssssheep.summer.pojo.entity.User;
 import com.ssssheep.summer.pojo.vo.CreateUserParam;
+import com.ssssheep.summer.pojo.vo.ResetPwdParam;
 import com.ssssheep.summer.pojo.vo.UserLoginParam;
 import com.ssssheep.summer.service.UserService;
 import com.ssssheep.summer.util.Utils;
@@ -17,6 +18,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
@@ -151,5 +155,30 @@ public class UserServiceImpl implements UserService {
         Page<MovieTicket> page = movieTicketDao.findAllByBuyerUidOrderByIdDesc(uid, pageable);
         return ApiResult.success(new PageData<MovieTicket>()
                 .build(page.getTotalPages(), page.getTotalElements(), page.getContent()));
+    }
+
+    /**
+     * 找回密码
+     *
+     * @param request 请求
+     * @param param   参数
+     * @return 请求结果
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ApiResult findAndResetPwd(HttpServletRequest request, ResetPwdParam param) {
+        HttpSession session = request.getSession();
+        String verifyCode = String.valueOf(session.getAttribute("verifyCode"));
+        LocalDateTime startTime = (LocalDateTime) session.getAttribute("startTime");
+        if(startTime.plusMinutes(1).plusSeconds(30).isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("验证码超期,请重新发送");
+        }
+        if(!param.getVerifyCode().toUpperCase().equalsIgnoreCase(verifyCode)) {
+            throw new RuntimeException("验证码错误");
+        }
+        User user = userDao.findById(param.getId()).orElseThrow(() -> new RuntimeException("不存在的用户编号"));
+        user.setPassword(param.getNewPwd());
+        userDao.save(user);
+        return ApiResult.success("重设密码成功");
     }
 }

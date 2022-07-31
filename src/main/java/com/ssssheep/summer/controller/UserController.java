@@ -3,10 +3,13 @@ package com.ssssheep.summer.controller;
 import com.ssssheep.summer.pojo.dto.ApiResult;
 import com.ssssheep.summer.pojo.entity.User;
 import com.ssssheep.summer.pojo.vo.CreateUserParam;
+import com.ssssheep.summer.pojo.vo.ResetPwdParam;
 import com.ssssheep.summer.pojo.vo.UserLoginParam;
 import com.ssssheep.summer.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created By Intellij IDEA
@@ -64,4 +67,10 @@ public class UserController {
             @RequestParam(required = false) Integer pageSize) {
         return userService.getBuyHistory(uid, pageNum, pageSize);
     }
+
+    @PostMapping("/reset/pwd")
+    public ApiResult resetPwd(HttpServletRequest request, @RequestBody ResetPwdParam param) {
+        return userService.findAndResetPwd(request, param);
+    }
+
 }

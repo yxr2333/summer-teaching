@@ -1,5 +1,6 @@
 package com.ssssheep.summer;
 
+import cn.hutool.extra.mail.MailUtil;
 import com.ssssheep.summer.service.MovieService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ class SummerTeachingApplicationTests {
 	private MovieService movieService;
 	@Test
 	void contextLoads() {
-		System.out.println(movieService.getSessionsByMovieId(7051806));
+		MailUtil.send("54535282@qq.com", "测试", "邮件来自Java", false);
 	}
 
 }

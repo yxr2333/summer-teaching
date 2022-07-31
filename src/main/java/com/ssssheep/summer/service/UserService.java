@@ -3,7 +3,10 @@ package com.ssssheep.summer.service;
 import com.ssssheep.summer.pojo.dto.ApiResult;
 import com.ssssheep.summer.pojo.entity.User;
 import com.ssssheep.summer.pojo.vo.CreateUserParam;
+import com.ssssheep.summer.pojo.vo.ResetPwdParam;
 import com.ssssheep.summer.pojo.vo.UserLoginParam;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created By Intellij IDEA
@@ -72,4 +75,13 @@ public interface UserService {
      * @return 请求结果
      */
     ApiResult getBuyHistory(Integer uid, Integer pageNum, Integer pageSize);
+
+
+    /**
+     * 找回密码
+     * @param request 请求
+     * @param param 参数
+     * @return 请求结果
+     */
+    ApiResult findAndResetPwd(HttpServletRequest request, ResetPwdParam param);
 }
