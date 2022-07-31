@@ -1,4 +1,4 @@
-package com.ssssheep.summer.pojo;
+package com.ssssheep.summer.pojo.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
  * Created By Intellij IDEA
  *
  * @author ssssheep
- * @package com.ssssheep.summer.pojo
- * @datetime 2022/7/28 星期四
+ * @package com.ssssheep.summer.pojo.entity
+ * @datetime 2022/7/31 Sunday
  */
 @Entity
 @Getter
@@ -20,32 +20,24 @@ import java.time.LocalDateTime;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "t_movie_tickets")
-public class MovieTicket {
+@Table(name = "t_movie_sessions")
+public class MovieSession {
 
-    @Column(name = "order_id")
     @Id
+    @Column(name = "session_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "movie_title",length = 40)
-    private String name;
-
-    private Double price;
-
-    @Column(length = 40)
-    private String cinema;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "start_time")
     private LocalDateTime startTime;
 
-    @ManyToOne
-    @JoinColumn(name = "f_uid")
-    private User buyer;
+    private Double price;
 
-    @ManyToOne
-    @JoinColumn(name = "f_movie_id")
-    private Movie movie;
-
+    private Integer votes;
 }

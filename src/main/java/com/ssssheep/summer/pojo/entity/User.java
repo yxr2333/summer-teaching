@@ -1,4 +1,4 @@
-package com.ssssheep.summer.pojo;
+package com.ssssheep.summer.pojo.entity;
 
 import lombok.*;
 
@@ -34,7 +34,7 @@ public class User {
     @Column(length = 11)
     private String phone;
 
-    @Column(length = 40)
+    @Column(length = 40,unique = true,nullable = false)
     private String name;
 
     @Column(length = 4)

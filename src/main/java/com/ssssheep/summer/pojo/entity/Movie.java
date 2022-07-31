@@ -1,4 +1,4 @@
-package com.ssssheep.summer.pojo;
+package com.ssssheep.summer.pojo.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -42,6 +42,7 @@ public class Movie {
 
     private String country;
 
+    @Column(name = "lang")
     private String language;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
