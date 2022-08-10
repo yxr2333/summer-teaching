@@ -32,4 +32,9 @@ public class MovieController {
         }
         return movieService.getOne(uid);
     }
+
+    @GetMapping("/session")
+    public ApiResult getMovieSessions(@RequestParam Integer movieId) {
+        return movieService.getSessionsByMovieId(movieId);
+    }
 }

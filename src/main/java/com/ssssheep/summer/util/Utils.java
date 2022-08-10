@@ -11,9 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 /**
  * Created By Intellij IDEA
  *
@@ -24,10 +21,6 @@ import javax.persistence.PersistenceContext;
 @Component
 @RequiredArgsConstructor
 public class Utils<T> {
-
-    @PersistenceContext
-    final EntityManager entityManager;
-
     final UserDao userDao;
     final MovieDao movieDao;
 
